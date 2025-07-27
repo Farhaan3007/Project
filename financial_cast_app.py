@@ -12,7 +12,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Read API key from environment
-openai.api_key = os.getenv("OPENAI_API_KEY")
+client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 st.title("Financial Statement Casting")
 
@@ -41,7 +41,7 @@ if uploaded_file is not None:
 if file_text:
     if st.button("Analyze"):
         with st.spinner("Processing with OpenAI..."):
-            response = openai.ChatCompletion.create(
+            response = client.chat.completions.create(
                 model="gpt-3.5-turbo",
                 messages=[
                     {
